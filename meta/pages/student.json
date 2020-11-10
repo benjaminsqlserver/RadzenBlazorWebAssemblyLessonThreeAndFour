@@ -1,0 +1,652 @@
+{
+  "components": [
+    {
+      "type": "content",
+      "container": "main",
+      "components": [
+        {
+          "type": "heading",
+          "name": "pageTitle",
+          "size": "H1",
+          "text": "Student"
+        },
+        {
+          "type": "row",
+          "components": [
+            {
+              "type": "col",
+              "class": "col-md-12",
+              "components": [
+                {
+                  "icon": "add_circle_outline",
+                  "name": "button0",
+                  "style": {
+                    "marginBottom": "10px"
+                  },
+                  "text": "Add",
+                  "type": "button",
+                  "events": {
+                    "click": [
+                      {
+                        "path": "add-student",
+                        "type": "popup",
+                        "then": [
+                          {
+                            "code": "await grid0.Reload();",
+                            "type": "execute"
+                          },
+                          {
+                            "code": "await InvokeAsync(() => { StateHasChanged(); });",
+                            "type": "execute"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                },
+                {
+                  "events": {
+                    "click": [
+                      {
+                        "condition": "${event?.Value == \"csv\"}",
+                        "fileName": "Student",
+                        "name": "conData.getStudents",
+                        "parameters": [
+                          {
+                            "name": "$filter",
+                            "value": "${grid0.Query.Filter}"
+                          },
+                          {
+                            "name": "$orderby",
+                            "value": "${grid0.Query.OrderBy}"
+                          }
+                        ],
+                        "type": "export"
+                      },
+                      {
+                        "condition": "${event?.Value == \"xlsx\"}",
+                        "fileName": "Student",
+                        "format": "xlsx",
+                        "name": "conData.getStudents",
+                        "parameters": [
+                          {
+                            "name": "$filter",
+                            "value": "${grid0.Query.Filter}"
+                          },
+                          {
+                            "name": "$orderby",
+                            "value": "${grid0.Query.OrderBy}"
+                          }
+                        ],
+                        "type": "export"
+                      }
+                    ]
+                  },
+                  "icon": "get_app",
+                  "items": [
+                    {
+                      "icon": "",
+                      "text": "Excel",
+                      "value": "xlsx"
+                    },
+                    {
+                      "icon": "",
+                      "text": "CSV",
+                      "value": "csv"
+                    }
+                  ],
+                  "name": "splitbutton0",
+                  "style": {
+                    "marginLeft": "10px",
+                    "marginBottom": "10px"
+                  },
+                  "text": "Export",
+                  "type": "splitbutton"
+                },
+                {
+                  "attributes": [
+                    {
+                      "name": "@oninput",
+                      "value": "@(async(args) => {search = $\"{args.Value}\";await grid0.Reload();})"
+                    }
+                  ],
+                  "name": "textbox0",
+                  "placeholder": "Search ...",
+                  "style": {
+                    "display": "block",
+                    "marginBottom": "10px",
+                    "width": "100%"
+                  },
+                  "type": "textbox",
+                  "value": ""
+                },
+                {
+                  "name": "grid0",
+                  "allowFiltering": true,
+                  "filterMode": "advanced",
+                  "allowPaging": true,
+                  "allowSorting": true,
+                  "data": "${getStudentsResult}",
+                  "events": {
+                    "loadData": [
+                      {
+                        "name": "conData.getStudents",
+                        "parameters": [
+                          {
+                            "name": "$top",
+                            "value": "event.top"
+                          },
+                          {
+                            "name": "$skip",
+                            "value": "event.skip"
+                          },
+                          {
+                            "name": "$count",
+                            "value": "event.top != null && event.skip != null"
+                          },
+                          {
+                            "name": "$filter",
+                            "value": [
+                              {
+                                "filters": [
+                                  {
+                                    "operation": "contains",
+                                    "property": "SchoolAdmissionNumber",
+                                    "type": "string",
+                                    "value": "\"${search}\""
+                                  },
+                                  {
+                                    "operation": "contains",
+                                    "property": "Surname",
+                                    "type": "string",
+                                    "value": "\"${search}\""
+                                  },
+                                  {
+                                    "operation": "contains",
+                                    "property": "FirstName",
+                                    "type": "string",
+                                    "value": "\"${search}\""
+                                  },
+                                  {
+                                    "operation": "contains",
+                                    "property": "OtherNames",
+                                    "type": "string",
+                                    "value": "\"${search}\""
+                                  },
+                                  {
+                                    "operation": "contains",
+                                    "property": "Username",
+                                    "type": "string",
+                                    "value": "\"${search}\""
+                                  },
+                                  {
+                                    "operation": "contains",
+                                    "property": "Password",
+                                    "type": "string",
+                                    "value": "\"${search}\""
+                                  },
+                                  {
+                                    "operation": "contains",
+                                    "property": "ConfirmPassword",
+                                    "type": "string",
+                                    "value": "\"${search}\""
+                                  },
+                                  {
+                                    "operation": "contains",
+                                    "property": "FatherSurname",
+                                    "type": "string",
+                                    "value": "\"${search}\""
+                                  },
+                                  {
+                                    "operation": "contains",
+                                    "property": "FatherFirstName",
+                                    "type": "string",
+                                    "value": "\"${search}\""
+                                  },
+                                  {
+                                    "operation": "contains",
+                                    "property": "FatherOtherNames",
+                                    "type": "string",
+                                    "value": "\"${search}\""
+                                  },
+                                  {
+                                    "operation": "contains",
+                                    "property": "FatherEmail",
+                                    "type": "string",
+                                    "value": "\"${search}\""
+                                  },
+                                  {
+                                    "operation": "contains",
+                                    "property": "FatherTelephone",
+                                    "type": "string",
+                                    "value": "\"${search}\""
+                                  },
+                                  {
+                                    "operation": "contains",
+                                    "property": "FatherProfession",
+                                    "type": "string",
+                                    "value": "\"${search}\""
+                                  },
+                                  {
+                                    "operation": "contains",
+                                    "property": "FatherOffice",
+                                    "type": "string",
+                                    "value": "\"${search}\""
+                                  },
+                                  {
+                                    "operation": "contains",
+                                    "property": "FatherResidentialAddress",
+                                    "type": "string",
+                                    "value": "\"${search}\""
+                                  },
+                                  {
+                                    "operation": "contains",
+                                    "property": "MotherSurname",
+                                    "type": "string",
+                                    "value": "\"${search}\""
+                                  },
+                                  {
+                                    "operation": "contains",
+                                    "property": "MotherFirstName",
+                                    "type": "string",
+                                    "value": "\"${search}\""
+                                  },
+                                  {
+                                    "operation": "contains",
+                                    "property": "MotherOtherNames",
+                                    "type": "string",
+                                    "value": "\"${search}\""
+                                  },
+                                  {
+                                    "operation": "contains",
+                                    "property": "MotherEmail",
+                                    "type": "string",
+                                    "value": "\"${search}\""
+                                  },
+                                  {
+                                    "operation": "contains",
+                                    "property": "MotherTelephone",
+                                    "type": "string",
+                                    "value": "\"${search}\""
+                                  },
+                                  {
+                                    "operation": "contains",
+                                    "property": "MotherProfession",
+                                    "type": "string",
+                                    "value": "\"${search}\""
+                                  },
+                                  {
+                                    "operation": "contains",
+                                    "property": "MotherOffice",
+                                    "type": "string",
+                                    "value": "\"${search}\""
+                                  },
+                                  {
+                                    "operation": "contains",
+                                    "property": "MotherResidentialAddress",
+                                    "type": "string",
+                                    "value": "\"${search}\""
+                                  },
+                                  {
+                                    "operation": "contains",
+                                    "property": "GuardianSurname",
+                                    "type": "string",
+                                    "value": "\"${search}\""
+                                  },
+                                  {
+                                    "operation": "contains",
+                                    "property": "GuardianFirstName",
+                                    "type": "string",
+                                    "value": "\"${search}\""
+                                  },
+                                  {
+                                    "operation": "contains",
+                                    "property": "GuardianOtherNames",
+                                    "type": "string",
+                                    "value": "\"${search}\""
+                                  },
+                                  {
+                                    "operation": "contains",
+                                    "property": "GuardianEmail",
+                                    "type": "string",
+                                    "value": "\"${search}\""
+                                  },
+                                  {
+                                    "operation": "contains",
+                                    "property": "GuardianTelephone",
+                                    "type": "string",
+                                    "value": "\"${search}\""
+                                  },
+                                  {
+                                    "operation": "contains",
+                                    "property": "GuardianProfession",
+                                    "type": "string",
+                                    "value": "\"${search}\""
+                                  },
+                                  {
+                                    "operation": "contains",
+                                    "property": "GuardianOffice",
+                                    "type": "string",
+                                    "value": "\"${search}\""
+                                  },
+                                  {
+                                    "operation": "contains",
+                                    "property": "GuardianResidentialAddress",
+                                    "type": "string",
+                                    "value": "\"${search}\""
+                                  }
+                                ],
+                                "operator": "or"
+                              },
+                              {
+                                "value": "${(string.IsNullOrEmpty(event.filter)? \"true\" : event.filter)}"
+                              }
+                            ],
+                            "operator": "and"
+                          },
+                          {
+                            "name": "$orderby",
+                            "value": "${event.orderby}"
+                          },
+                          {
+                            "name": "$expand",
+                            "value": "Gender,Country,Country1,Country2,Country3"
+                          }
+                        ],
+                        "then": [
+                          {
+                            "name": "getStudentsResult",
+                            "type": "set",
+                            "value": "${result.Value.AsODataEnumerable()}",
+                            "valueType": "IEnumerable<CaApp.Models.ConData.Student>"
+                          },
+                          {
+                            "name": "getStudentsCount",
+                            "type": "set",
+                            "value": "${result.Count}",
+                            "valueType": "int"
+                          }
+                        ],
+                        "type": "invoke",
+                        "error": [
+                          {
+                            "detail": "Unable to load Students",
+                            "severity": "error",
+                            "summary": "Error",
+                            "type": "notify"
+                          }
+                        ]
+                      }
+                    ],
+                    "rowSelect": [
+                      {
+                        "parameters": [
+                          {
+                            "name": "StudentID",
+                            "value": "${event.StudentID}"
+                          }
+                        ],
+                        "path": "edit-student",
+                        "type": "popup",
+                        "then": [
+                          {
+                            "code": "await grid0.Reload();",
+                            "type": "execute"
+                          },
+                          {
+                            "code": "await InvokeAsync(() => { StateHasChanged(); });",
+                            "type": "execute"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "title": "",
+                  "columns": [
+                    {
+                      "property": "StudentID",
+                      "title": "Student ID"
+                    },
+                    {
+                      "property": "SchoolAdmissionNumber",
+                      "title": "School Admission Number"
+                    },
+                    {
+                      "property": "Surname",
+                      "title": "Surname"
+                    },
+                    {
+                      "property": "FirstName",
+                      "title": "First Name"
+                    },
+                    {
+                      "property": "OtherNames",
+                      "title": "Other Names"
+                    },
+                    {
+                      "property": "GenderID",
+                      "sortProperty": "Gender.GenderName",
+                      "filterProperty": "Gender.GenderName",
+                      "template": "${data.Gender?.GenderName}",
+                      "title": "Gender"
+                    },
+                    {
+                      "property": "NationalityID",
+                      "sortProperty": "Country.CountryName",
+                      "filterProperty": "Country.CountryName",
+                      "template": "${data.Country?.CountryName}",
+                      "title": "Country"
+                    },
+                    {
+                      "property": "Username",
+                      "title": "Username"
+                    },
+                    {
+                      "property": "Password",
+                      "title": "Password"
+                    },
+                    {
+                      "property": "ConfirmPassword",
+                      "title": "Confirm Password"
+                    },
+                    {
+                      "property": "FatherSurname",
+                      "title": "Father Surname"
+                    },
+                    {
+                      "property": "FatherFirstName",
+                      "title": "Father First Name"
+                    },
+                    {
+                      "property": "FatherOtherNames",
+                      "title": "Father Other Names"
+                    },
+                    {
+                      "property": "FatherNationalityID",
+                      "sortProperty": "Country1.CountryName",
+                      "filterProperty": "Country1.CountryName",
+                      "template": "${data.Country1?.CountryName}",
+                      "title": "Country"
+                    },
+                    {
+                      "property": "FatherEmail",
+                      "title": "Father Email"
+                    },
+                    {
+                      "property": "FatherTelephone",
+                      "title": "Father Telephone"
+                    },
+                    {
+                      "property": "FatherProfession",
+                      "title": "Father Profession"
+                    },
+                    {
+                      "property": "FatherOffice",
+                      "title": "Father Office"
+                    },
+                    {
+                      "property": "FatherResidentialAddress",
+                      "title": "Father Residential Address"
+                    },
+                    {
+                      "property": "MotherSurname",
+                      "title": "Mother Surname"
+                    },
+                    {
+                      "property": "MotherFirstName",
+                      "title": "Mother First Name"
+                    },
+                    {
+                      "property": "MotherOtherNames",
+                      "title": "Mother Other Names"
+                    },
+                    {
+                      "property": "MotherNationalityID",
+                      "sortProperty": "Country2.CountryName",
+                      "filterProperty": "Country2.CountryName",
+                      "template": "${data.Country2?.CountryName}",
+                      "title": "Country"
+                    },
+                    {
+                      "property": "MotherEmail",
+                      "title": "Mother Email"
+                    },
+                    {
+                      "property": "MotherTelephone",
+                      "title": "Mother Telephone"
+                    },
+                    {
+                      "property": "MotherProfession",
+                      "title": "Mother Profession"
+                    },
+                    {
+                      "property": "MotherOffice",
+                      "title": "Mother Office"
+                    },
+                    {
+                      "property": "MotherResidentialAddress",
+                      "title": "Mother Residential Address"
+                    },
+                    {
+                      "property": "GuardianSurname",
+                      "title": "Guardian Surname"
+                    },
+                    {
+                      "property": "GuardianFirstName",
+                      "title": "Guardian First Name"
+                    },
+                    {
+                      "property": "GuardianOtherNames",
+                      "title": "Guardian Other Names"
+                    },
+                    {
+                      "property": "GuardianNationalityID",
+                      "sortProperty": "Country3.CountryName",
+                      "filterProperty": "Country3.CountryName",
+                      "template": "${data.Country3?.CountryName}",
+                      "title": "Country"
+                    },
+                    {
+                      "property": "GuardianEmail",
+                      "title": "Guardian Email"
+                    },
+                    {
+                      "property": "GuardianTelephone",
+                      "title": "Guardian Telephone"
+                    },
+                    {
+                      "property": "GuardianProfession",
+                      "title": "Guardian Profession"
+                    },
+                    {
+                      "property": "GuardianOffice",
+                      "title": "Guardian Office"
+                    },
+                    {
+                      "property": "GuardianResidentialAddress",
+                      "title": "Guardian Residential Address"
+                    },
+                    {
+                      "filterable": false,
+                      "sortable": false,
+                      "width": "70px",
+                      "textAlign": "center",
+                      "template": [
+                        {
+                          "attributes": [
+                            {
+                              "name": "@onclick:stopPropagation",
+                              "value": true
+                            }
+                          ],
+                          "buttonStyle": "danger",
+                          "icon": "close",
+                          "name": "gridDeleteButton",
+                          "text": "",
+                          "size": "sm",
+                          "type": "button",
+                          "events": {
+                            "click": [
+                              {
+                                "condition": "await DialogService.Confirm(\"Are you sure you want to delete this record?\") == true",
+                                "error": [
+                                  {
+                                    "detail": "Unable to delete Student",
+                                    "severity": "error",
+                                    "summary": "Error",
+                                    "type": "notify"
+                                  }
+                                ],
+                                "name": "conData.deleteStudent",
+                                "parameters": [
+                                  {
+                                    "name": "StudentID",
+                                    "value": "${data.StudentID}"
+                                  }
+                                ],
+                                "then": [
+                                  {
+                                    "code": "await grid0.Reload();",
+                                    "condition": "result != null",
+                                    "type": "execute"
+                                  }
+                                ],
+                                "type": "invoke"
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  ],
+                  "type": "grid",
+                  "count": "${getStudentsCount}",
+                  "itemType": "CaApp.Models.ConData.Student"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "events": {
+    "load": [
+      {
+        "condition": "string.IsNullOrEmpty(search)",
+        "name": "search",
+        "type": "set",
+        "value": "\"\"",
+        "valueType": "string"
+      }
+    ]
+  },
+  "name": "Student",
+  "access": [
+    "ClassTeacher",
+    "SchoolAdmin",
+    "SubjectTeacher",
+    "SuperAdmin"
+  ],
+  "layout": "Main"
+}

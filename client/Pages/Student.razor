@@ -1,0 +1,134 @@
+﻿@page "/student"
+@layout MainLayout
+@inherits CaApp.Pages.StudentComponent
+
+@using Radzen
+@using Radzen.Blazor
+@using CaApp.Models.ConData
+@using Microsoft.AspNetCore.Identity;
+@using CaApp.Models
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize(Roles="ClassTeacher, SchoolAdmin, SubjectTeacher, SuperAdmin")]
+
+
+<RadzenContent Container="main">
+  <ChildContent>
+    <RadzenHeading Size="H1" Text="Student">
+    </RadzenHeading>
+    <div class="row">
+      <div class="col-md-12">
+        <RadzenButton Icon="add_circle_outline" style="margin-bottom: 10px" Text="Add" Click="@Button0Click">
+        </RadzenButton>
+        <RadzenSplitButton Icon="get_app" style="margin-left: 10px; margin-bottom: 10px" Text="Export" Click="@Splitbutton0Click">
+          <ChildContent>
+            <RadzenSplitButtonItem Text="Excel" Value="xlsx">
+            </RadzenSplitButtonItem>
+            <RadzenSplitButtonItem Text="CSV" Value="csv">
+            </RadzenSplitButtonItem>
+          </ChildContent>
+        </RadzenSplitButton>
+        <RadzenTextBox Placeholder="Search ..." style="display: block; margin-bottom: 10px; width: 100%" Name="Textbox0" @oninput="@(async(args) => {search = $"{args.Value}";await grid0.Reload();})">
+        </RadzenTextBox>
+        <RadzenGrid @ref="grid0" AllowFiltering="true" FilterMode="FilterMode.Advanced" AllowPaging="true" AllowSorting="true" Data="@getStudentsResult" Count="@getStudentsCount" TItem="CaApp.Models.ConData.Student" LoadData="@Grid0LoadData" RowSelect="@Grid0RowSelect">
+          <Columns>
+            <RadzenGridColumn TItem="CaApp.Models.ConData.Student" Property="StudentID" Title="Student ID">
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="CaApp.Models.ConData.Student" Property="SchoolAdmissionNumber" Title="School Admission Number">
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="CaApp.Models.ConData.Student" Property="Surname" Title="Surname">
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="CaApp.Models.ConData.Student" Property="FirstName" Title="First Name">
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="CaApp.Models.ConData.Student" Property="OtherNames" Title="Other Names">
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="CaApp.Models.ConData.Student" Property="GenderID" SortProperty="Gender.GenderName" FilterProperty="Gender.GenderName" Title="Gender">
+              <Template Context="data">
+              @(data.Gender?.GenderName)
+              </Template>
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="CaApp.Models.ConData.Student" Property="NationalityID" SortProperty="Country.CountryName" FilterProperty="Country.CountryName" Title="Country">
+              <Template Context="data">
+              @(data.Country?.CountryName)
+              </Template>
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="CaApp.Models.ConData.Student" Property="Username" Title="Username">
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="CaApp.Models.ConData.Student" Property="Password" Title="Password">
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="CaApp.Models.ConData.Student" Property="ConfirmPassword" Title="Confirm Password">
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="CaApp.Models.ConData.Student" Property="FatherSurname" Title="Father Surname">
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="CaApp.Models.ConData.Student" Property="FatherFirstName" Title="Father First Name">
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="CaApp.Models.ConData.Student" Property="FatherOtherNames" Title="Father Other Names">
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="CaApp.Models.ConData.Student" Property="FatherNationalityID" SortProperty="Country1.CountryName" FilterProperty="Country1.CountryName" Title="Country">
+              <Template Context="data">
+              @(data.Country1?.CountryName)
+              </Template>
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="CaApp.Models.ConData.Student" Property="FatherEmail" Title="Father Email">
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="CaApp.Models.ConData.Student" Property="FatherTelephone" Title="Father Telephone">
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="CaApp.Models.ConData.Student" Property="FatherProfession" Title="Father Profession">
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="CaApp.Models.ConData.Student" Property="FatherOffice" Title="Father Office">
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="CaApp.Models.ConData.Student" Property="FatherResidentialAddress" Title="Father Residential Address">
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="CaApp.Models.ConData.Student" Property="MotherSurname" Title="Mother Surname">
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="CaApp.Models.ConData.Student" Property="MotherFirstName" Title="Mother First Name">
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="CaApp.Models.ConData.Student" Property="MotherOtherNames" Title="Mother Other Names">
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="CaApp.Models.ConData.Student" Property="MotherNationalityID" SortProperty="Country2.CountryName" FilterProperty="Country2.CountryName" Title="Country">
+              <Template Context="data">
+              @(data.Country2?.CountryName)
+              </Template>
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="CaApp.Models.ConData.Student" Property="MotherEmail" Title="Mother Email">
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="CaApp.Models.ConData.Student" Property="MotherTelephone" Title="Mother Telephone">
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="CaApp.Models.ConData.Student" Property="MotherProfession" Title="Mother Profession">
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="CaApp.Models.ConData.Student" Property="MotherOffice" Title="Mother Office">
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="CaApp.Models.ConData.Student" Property="MotherResidentialAddress" Title="Mother Residential Address">
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="CaApp.Models.ConData.Student" Property="GuardianSurname" Title="Guardian Surname">
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="CaApp.Models.ConData.Student" Property="GuardianFirstName" Title="Guardian First Name">
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="CaApp.Models.ConData.Student" Property="GuardianOtherNames" Title="Guardian Other Names">
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="CaApp.Models.ConData.Student" Property="GuardianNationalityID" SortProperty="Country3.CountryName" FilterProperty="Country3.CountryName" Title="Country">
+              <Template Context="data">
+              @(data.Country3?.CountryName)
+              </Template>
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="CaApp.Models.ConData.Student" Property="GuardianEmail" Title="Guardian Email">
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="CaApp.Models.ConData.Student" Property="GuardianTelephone" Title="Guardian Telephone">
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="CaApp.Models.ConData.Student" Property="GuardianProfession" Title="Guardian Profession">
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="CaApp.Models.ConData.Student" Property="GuardianOffice" Title="Guardian Office">
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="CaApp.Models.ConData.Student" Property="GuardianResidentialAddress" Title="Guardian Residential Address">
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="CaApp.Models.ConData.Student" Filterable="false" Sortable="false" Width="70px" TextAlign="TextAlign.Center">
+              <Template Context="caAppModelsConDataStudent">
+                <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="close" Size="ButtonSize.Small" Click="@((args) =>GridDeleteButtonClick(args, caAppModelsConDataStudent))" @onclick:stopPropagation="true">
+                </RadzenButton>
+              </Template>
+            </RadzenGridColumn>
+          </Columns>
+        </RadzenGrid>
+      </div>
+    </div>
+  </ChildContent>
+</RadzenContent>

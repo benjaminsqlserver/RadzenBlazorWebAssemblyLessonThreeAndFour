@@ -1,0 +1,20 @@
+﻿@page "/"
+@page "/home-page"
+@layout MainLayout
+@inherits CaApp.Pages.HomePageComponent
+
+@using Radzen
+@using Radzen.Blazor
+@using CaApp.Models.ConData
+@using Microsoft.AspNetCore.Identity;
+@using CaApp.Models
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize]
+
+
+<RadzenContent Container="main">
+  <ChildContent>
+    <RadzenHeading Size="H1" Text="HomePage">
+    </RadzenHeading>
+  </ChildContent>
+</RadzenContent>

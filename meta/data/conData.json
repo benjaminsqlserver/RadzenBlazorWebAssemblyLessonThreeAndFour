@@ -1,0 +1,1197 @@
+{
+  "info": {
+    "title": "conData",
+    "x-type": "odata",
+    "x-connector": "mssql",
+    "x-connector-version": 15
+  },
+  "definitions": {
+    "Country": {
+      "x-table": "dbo.Countries",
+      "resource": "Countries",
+      "required": [
+        "CountryName"
+      ],
+      "properties": {
+        "CountryID": {
+          "x-key": true,
+          "x-identity": true,
+          "x-nullable": false,
+          "type": "integer",
+          "x-navigation": [
+            {
+              "inversePropertyName": "Country",
+              "name": "Students",
+              "type": "Student"
+            },
+            {
+              "inversePropertyName": "Country1",
+              "name": "Students1",
+              "type": "Student"
+            },
+            {
+              "inversePropertyName": "Country2",
+              "name": "Students2",
+              "type": "Student"
+            },
+            {
+              "inversePropertyName": "Country3",
+              "name": "Students3",
+              "type": "Student"
+            }
+          ]
+        },
+        "CountryName": {
+          "x-nullable": false,
+          "type": "string",
+          "length": 255
+        },
+        "Students": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Student"
+          }
+        }
+      }
+    },
+    "DeviceCode": {
+      "x-table": "dbo.DeviceCodes",
+      "resource": "DeviceCodes",
+      "required": [
+        "UserCode",
+        "DeviceCode1",
+        "ClientId",
+        "CreationTime",
+        "Expiration",
+        "Data"
+      ],
+      "properties": {
+        "UserCode": {
+          "x-key": true,
+          "x-nullable": false,
+          "type": "string",
+          "length": 200
+        },
+        "DeviceCode1": {
+          "x-original-name": "DeviceCode",
+          "x-nullable": false,
+          "type": "string",
+          "length": 200
+        },
+        "SubjectId": {
+          "type": "string",
+          "length": 200
+        },
+        "ClientId": {
+          "x-nullable": false,
+          "type": "string",
+          "length": 200
+        },
+        "CreationTime": {
+          "x-nullable": false,
+          "type": "string",
+          "format": "date-time",
+          "x-datetime": "datetime2"
+        },
+        "Expiration": {
+          "x-nullable": false,
+          "type": "string",
+          "format": "date-time",
+          "x-datetime": "datetime2"
+        },
+        "Data": {
+          "x-nullable": false,
+          "type": "string"
+        }
+      }
+    },
+    "Gender": {
+      "x-table": "dbo.Genders",
+      "resource": "Genders",
+      "required": [
+        "GenderName"
+      ],
+      "properties": {
+        "GenderID": {
+          "x-key": true,
+          "x-identity": true,
+          "x-nullable": false,
+          "type": "integer",
+          "x-navigation": [
+            {
+              "inversePropertyName": "Gender",
+              "name": "Students",
+              "type": "Student"
+            }
+          ]
+        },
+        "GenderName": {
+          "x-nullable": false,
+          "type": "string",
+          "length": 50
+        },
+        "Students": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Student"
+          }
+        }
+      }
+    },
+    "PersistedGrant": {
+      "x-table": "dbo.PersistedGrants",
+      "resource": "PersistedGrants",
+      "required": [
+        "Key",
+        "Type",
+        "ClientId",
+        "CreationTime",
+        "Data"
+      ],
+      "properties": {
+        "Key": {
+          "x-key": true,
+          "x-nullable": false,
+          "type": "string",
+          "length": 200
+        },
+        "Type": {
+          "x-nullable": false,
+          "type": "string",
+          "length": 50
+        },
+        "SubjectId": {
+          "type": "string",
+          "length": 200
+        },
+        "ClientId": {
+          "x-nullable": false,
+          "type": "string",
+          "length": 200
+        },
+        "CreationTime": {
+          "x-nullable": false,
+          "type": "string",
+          "format": "date-time",
+          "x-datetime": "datetime2"
+        },
+        "Expiration": {
+          "type": "string",
+          "format": "date-time",
+          "x-datetime": "datetime2"
+        },
+        "Data": {
+          "x-nullable": false,
+          "type": "string"
+        }
+      }
+    },
+    "Student": {
+      "x-table": "dbo.Students",
+      "resource": "Students",
+      "required": [
+        "SchoolAdmissionNumber",
+        "Surname",
+        "FirstName",
+        "GenderID",
+        "NationalityID",
+        "Username",
+        "Password",
+        "ConfirmPassword"
+      ],
+      "properties": {
+        "StudentID": {
+          "x-key": true,
+          "x-identity": true,
+          "x-nullable": false,
+          "type": "integer",
+          "format": "int64"
+        },
+        "SchoolAdmissionNumber": {
+          "x-nullable": false,
+          "type": "string",
+          "length": 50
+        },
+        "Surname": {
+          "x-nullable": false,
+          "type": "string",
+          "length": 50
+        },
+        "FirstName": {
+          "x-nullable": false,
+          "type": "string",
+          "length": 50
+        },
+        "OtherNames": {
+          "type": "string",
+          "length": 101
+        },
+        "Gender": {
+          "type": "object",
+          "$ref": "#/definitions/Gender"
+        },
+        "GenderID": {
+          "x-nullable": false,
+          "type": "integer",
+          "x-foreignKey": {
+            "parentTable": "Genders",
+            "parentEntityType": "Gender",
+            "type": "Gender",
+            "principalKey": "GenderID",
+            "name": "Gender",
+            "textProperty": "GenderName",
+            "navigationProperty": "Students"
+          }
+        },
+        "Country": {
+          "type": "object",
+          "$ref": "#/definitions/Country"
+        },
+        "NationalityID": {
+          "x-nullable": false,
+          "type": "integer",
+          "x-foreignKey": {
+            "parentTable": "Countries",
+            "parentEntityType": "Country",
+            "type": "Country",
+            "principalKey": "CountryID",
+            "name": "Country",
+            "textProperty": "CountryName",
+            "navigationProperty": "Students"
+          }
+        },
+        "Username": {
+          "x-nullable": false,
+          "type": "string",
+          "length": 50
+        },
+        "Password": {
+          "x-nullable": false,
+          "type": "string",
+          "length": 50
+        },
+        "ConfirmPassword": {
+          "x-nullable": false,
+          "type": "string",
+          "length": 50
+        },
+        "FatherSurname": {
+          "type": "string",
+          "length": 50
+        },
+        "FatherFirstName": {
+          "type": "string",
+          "length": 50
+        },
+        "FatherOtherNames": {
+          "type": "string",
+          "length": 101
+        },
+        "Country1": {
+          "type": "object",
+          "$ref": "#/definitions/Country"
+        },
+        "FatherNationalityID": {
+          "type": "integer",
+          "x-foreignKey": {
+            "parentTable": "Countries",
+            "parentEntityType": "Country",
+            "type": "Country",
+            "principalKey": "CountryID",
+            "name": "Country1",
+            "textProperty": "CountryName",
+            "navigationProperty": "Students1"
+          }
+        },
+        "FatherEmail": {
+          "type": "string",
+          "length": 50
+        },
+        "FatherTelephone": {
+          "type": "string",
+          "length": 50
+        },
+        "FatherProfession": {
+          "type": "string",
+          "length": 50
+        },
+        "FatherOffice": {
+          "type": "string",
+          "length": 100
+        },
+        "FatherResidentialAddress": {
+          "type": "string"
+        },
+        "MotherSurname": {
+          "type": "string",
+          "length": 50
+        },
+        "MotherFirstName": {
+          "type": "string",
+          "length": 50
+        },
+        "MotherOtherNames": {
+          "type": "string",
+          "length": 101
+        },
+        "Country2": {
+          "type": "object",
+          "$ref": "#/definitions/Country"
+        },
+        "MotherNationalityID": {
+          "type": "integer",
+          "x-foreignKey": {
+            "parentTable": "Countries",
+            "parentEntityType": "Country",
+            "type": "Country",
+            "principalKey": "CountryID",
+            "name": "Country2",
+            "textProperty": "CountryName",
+            "navigationProperty": "Students2"
+          }
+        },
+        "MotherEmail": {
+          "type": "string",
+          "length": 50
+        },
+        "MotherTelephone": {
+          "type": "string",
+          "length": 50
+        },
+        "MotherProfession": {
+          "type": "string",
+          "length": 50
+        },
+        "MotherOffice": {
+          "type": "string",
+          "length": 100
+        },
+        "MotherResidentialAddress": {
+          "type": "string"
+        },
+        "GuardianSurname": {
+          "type": "string",
+          "length": 50
+        },
+        "GuardianFirstName": {
+          "type": "string",
+          "length": 50
+        },
+        "GuardianOtherNames": {
+          "type": "string",
+          "length": 101
+        },
+        "Country3": {
+          "type": "object",
+          "$ref": "#/definitions/Country"
+        },
+        "GuardianNationalityID": {
+          "type": "integer",
+          "x-foreignKey": {
+            "parentTable": "Countries",
+            "parentEntityType": "Country",
+            "type": "Country",
+            "principalKey": "CountryID",
+            "name": "Country3",
+            "textProperty": "CountryName",
+            "navigationProperty": "Students3"
+          }
+        },
+        "GuardianEmail": {
+          "type": "string",
+          "length": 50
+        },
+        "GuardianTelephone": {
+          "type": "string",
+          "length": 50
+        },
+        "GuardianProfession": {
+          "type": "string",
+          "length": 50
+        },
+        "GuardianOffice": {
+          "type": "string",
+          "length": 100
+        },
+        "GuardianResidentialAddress": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "paths": {
+    "/Countries": {
+      "get": {
+        "operationId": "getCountries",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "$filter",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$orderby",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$expand",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$top",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "$skip",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "$count",
+            "type": "boolean"
+          },
+          {
+            "in": "query",
+            "name": "$format",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "properties": {
+                "value": {
+                  "items": {
+                    "$ref": "#/definitions/Country"
+                  },
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "createCountry",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "Country",
+            "schema": {
+              "$ref": "#/definitions/Country"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "schema": {
+              "$ref": "#/definitions/Country"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/DeviceCodes": {
+      "get": {
+        "operationId": "getDeviceCodes",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "$filter",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$orderby",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$expand",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$top",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "$skip",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "$count",
+            "type": "boolean"
+          },
+          {
+            "in": "query",
+            "name": "$format",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "properties": {
+                "value": {
+                  "items": {
+                    "$ref": "#/definitions/DeviceCode"
+                  },
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "createDeviceCode",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "DeviceCode",
+            "schema": {
+              "$ref": "#/definitions/DeviceCode"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "schema": {
+              "$ref": "#/definitions/DeviceCode"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/Genders": {
+      "get": {
+        "operationId": "getGenders",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "$filter",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$orderby",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$expand",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$top",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "$skip",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "$count",
+            "type": "boolean"
+          },
+          {
+            "in": "query",
+            "name": "$format",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "properties": {
+                "value": {
+                  "items": {
+                    "$ref": "#/definitions/Gender"
+                  },
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "createGender",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "Gender",
+            "schema": {
+              "$ref": "#/definitions/Gender"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "schema": {
+              "$ref": "#/definitions/Gender"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/PersistedGrants": {
+      "get": {
+        "operationId": "getPersistedGrants",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "$filter",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$orderby",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$expand",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$top",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "$skip",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "$count",
+            "type": "boolean"
+          },
+          {
+            "in": "query",
+            "name": "$format",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "properties": {
+                "value": {
+                  "items": {
+                    "$ref": "#/definitions/PersistedGrant"
+                  },
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "createPersistedGrant",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "PersistedGrant",
+            "schema": {
+              "$ref": "#/definitions/PersistedGrant"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "schema": {
+              "$ref": "#/definitions/PersistedGrant"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/Students": {
+      "get": {
+        "operationId": "getStudents",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "$filter",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$orderby",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$expand",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$top",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "$skip",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "$count",
+            "type": "boolean"
+          },
+          {
+            "in": "query",
+            "name": "$format",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "properties": {
+                "value": {
+                  "items": {
+                    "$ref": "#/definitions/Student"
+                  },
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "createStudent",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "Student",
+            "schema": {
+              "$ref": "#/definitions/Student"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "schema": {
+              "$ref": "#/definitions/Student"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/Countries({CountryID})": {
+      "delete": {
+        "operationId": "deleteCountry",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "CountryID",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "204": {},
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "get": {
+        "operationId": "getCountryByCountryID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "CountryID",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/Country"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "patch": {
+        "operationId": "updateCountry",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "CountryID",
+            "type": "integer"
+          },
+          {
+            "in": "body",
+            "name": "Country",
+            "schema": {
+              "$ref": "#/definitions/Country"
+            }
+          }
+        ],
+        "responses": {
+          "204": {},
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/DeviceCodes('{UserCode}')": {
+      "delete": {
+        "operationId": "deleteDeviceCode",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "UserCode",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {},
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "get": {
+        "operationId": "getDeviceCodeByUserCode",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "UserCode",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/DeviceCode"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "patch": {
+        "operationId": "updateDeviceCode",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "UserCode",
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "DeviceCode",
+            "schema": {
+              "$ref": "#/definitions/DeviceCode"
+            }
+          }
+        ],
+        "responses": {
+          "204": {},
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/Genders({GenderID})": {
+      "delete": {
+        "operationId": "deleteGender",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "GenderID",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "204": {},
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "get": {
+        "operationId": "getGenderByGenderID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "GenderID",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/Gender"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "patch": {
+        "operationId": "updateGender",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "GenderID",
+            "type": "integer"
+          },
+          {
+            "in": "body",
+            "name": "Gender",
+            "schema": {
+              "$ref": "#/definitions/Gender"
+            }
+          }
+        ],
+        "responses": {
+          "204": {},
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/PersistedGrants('{Key}')": {
+      "delete": {
+        "operationId": "deletePersistedGrant",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "Key",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {},
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "get": {
+        "operationId": "getPersistedGrantByKey",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "Key",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/PersistedGrant"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "patch": {
+        "operationId": "updatePersistedGrant",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "Key",
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "PersistedGrant",
+            "schema": {
+              "$ref": "#/definitions/PersistedGrant"
+            }
+          }
+        ],
+        "responses": {
+          "204": {},
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/Students({StudentID})": {
+      "delete": {
+        "operationId": "deleteStudent",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "StudentID",
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "204": {},
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "get": {
+        "operationId": "getStudentByStudentID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "StudentID",
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/Student"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "patch": {
+        "operationId": "updateStudent",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "StudentID",
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "in": "body",
+            "name": "Student",
+            "schema": {
+              "$ref": "#/definitions/Student"
+            }
+          }
+        ],
+        "responses": {
+          "204": {},
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    }
+  },
+  "basePath": "/odata/conData",
+  "host": "localhost:5001",
+  "schemes": [
+    "https"
+  ]
+}
